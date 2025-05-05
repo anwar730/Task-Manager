@@ -20,7 +20,7 @@ function TaskList({ currentUser }) {
     );
   }
   function handleDelete(taskId) {
-    fetch(`http://localhost:3000/users/${currentUser.id}/tasks/${taskId}`, {
+    fetch(`https://task-manager-4iiq.onrender.com/users/${currentUser.id}/tasks/${taskId}`, {
       method: "DELETE",
       credentials: "include",
     })
@@ -39,7 +39,7 @@ function TaskList({ currentUser }) {
     }
 
     // Fetch tasks for the current user
-    fetch(`http://localhost:3000/users/${currentUser.id}/tasks`, {
+    fetch(`https://task-manager-4iiq.onrender.com/users/${currentUser.id}/tasks`, {
       credentials: "include"
     })
       .then(r => r.json())

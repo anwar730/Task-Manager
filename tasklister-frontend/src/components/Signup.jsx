@@ -12,7 +12,7 @@ function Signup({ setCurrentUser }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
-    const response = await fetch("http://localhost:3000/signup", {
+    const response = await fetch("https://task-manager-4iiq.onrender.com/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -21,7 +21,7 @@ function Signup({ setCurrentUser }) {
 
     if (response.ok) {
       // After signup, fetch the current user
-      const meResponse = await fetch("http://localhost:3000/me", {
+      const meResponse = await fetch("https://task-manager-4iiq.onrender.com/me", {
         credentials: "include",
       });
 

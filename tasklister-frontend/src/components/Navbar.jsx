@@ -5,7 +5,7 @@ function Navbar({ currentUser, setCurrentUser }) {
     const navigate = useNavigate();
     
     const handleLogout = () => {
-      fetch("http://localhost:3000/logout", {
+      fetch("https://task-manager-4iiq.onrender.com/logout", {
         method: "DELETE",
         credentials: "include"
       })
