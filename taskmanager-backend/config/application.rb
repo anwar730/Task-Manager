@@ -31,17 +31,6 @@ module TaskmanagerBackend
 
 # Read more: https://github.com/cyu/rack-cors
 
-Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins "http://localhost:5173"
-
-    resource "*",
-      headers: :any,
-      credentials: true, # Allow cookies (session)
-      methods: [:get, :post, :put, :patch, :delete, :options]
-  end
-end
-
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
