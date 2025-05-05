@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
        puts "Session ID: #{session[:user_id]}"
       render json: user  # Return the user data as response
     else
-      render json: { errors: ["Invalid username or password"] }, status: :unauthorized
+      render json: { errors: ["Invalid username or password"] }, status: :unprocessable_entity
     end
   end
 

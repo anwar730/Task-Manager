@@ -10,23 +10,30 @@ function Login({setCurrentUser}) {
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
+    console.log("Sending login data:", { name, password });
+
     const response = await fetch("https://task-manager-4iiq.onrender.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ user: { name, password },  // Format 1: Nested under 'user'
-        name,                      // Format 2: Direct properties
-        password}),
+      body: JSON.stringify({ name, password }),
     });
-
+  
     if (response.ok) {
-        const userData = await response.json();
-        setCurrentUser(userData);
-        navigate("/tasks");
+      const userData = await response.json();
+      setCurrentUser(userData);
+      navigate("/tasks");
     } else {
-      response.json().then((err) => setErrors(err.errors));
+      try {
+        const err = await response.json(); // safer
+        setErrors(err.errors || ["Login failed."]);
+      } catch (e) {
+        // Server didn't return JSON (or returned nothing)
+        setErrors(["Unexpected error. Please try again."]);
+      }
     }
   }
+  
 
   return (
     <div className="flex justify-center items-center h-[80vh]">
