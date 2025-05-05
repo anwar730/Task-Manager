@@ -1,4 +1,9 @@
 class ApplicationController < ActionController::API
+  include ActionController::Cookies
+  include ActionController::RequestForgeryProtection
+  
+  # If you want CSRF protection (recommended for cookies/sessions)
+  protect_from_forgery with: :exception
   before_action :authorize
   
   private
