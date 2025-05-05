@@ -12,6 +12,7 @@ test:
   database: taskmanager_backend_test
 
 production:
+primary: &primary_production
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
 
@@ -24,7 +25,7 @@ queue:
      <<: *primary_production
      database: taskmanager_backend_production_queue
      migrations_paths: db/queue_migrate
-     
+
 cable:
      <<: *primary_production
      database: taskmanager_backend_production_cable
