@@ -12,7 +12,7 @@ test:
   database: taskmanager_backend_test
 
 production:
-primary: &primary_production
+  primary: &primary_production
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
 
