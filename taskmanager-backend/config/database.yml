@@ -81,9 +81,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: taskmanager_backend_production
-    username: taskmanager_backend
-    password: <%= ENV["TASKMANAGER_BACKEND_DATABASE_PASSWORD"] %>
+    url: <%= ENV['DATABASE_URL'] %>
   cache:
     <<: *primary_production
     database: taskmanager_backend_production_cache
