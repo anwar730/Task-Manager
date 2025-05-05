@@ -14,7 +14,9 @@ function Login({setCurrentUser}) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ name, password }),
+      body: JSON.stringify({ user: { name, password },  // Format 1: Nested under 'user'
+        name,                      // Format 2: Direct properties
+        password}),
     });
 
     if (response.ok) {
