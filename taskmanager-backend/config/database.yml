@@ -24,3 +24,4 @@ cable:
 queue:
     adapter: postgresql
     encoding: unicode
+    database: taskmanager_backend
