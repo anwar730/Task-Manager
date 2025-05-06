@@ -5,6 +5,7 @@ import { Trash2 } from "lucide-react";
 
 
 function TaskList({ currentUser }) {
+  console.log(currentUser)
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");  // For search input
   const [loading, setLoading] = useState(true);
