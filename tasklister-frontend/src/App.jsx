@@ -12,7 +12,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    fetch("http://localhost:3000/me", { credentials: "include" })
+    fetch("https://task-manager-4iiq.onrender.com/me", { credentials: "include" })
       .then((r) => {
         if (r.ok) {
           r.json().then(user => {
