@@ -12,6 +12,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log("Token on load:", token);
     if (!token) {
       setLoading(false);
       return;
@@ -21,7 +22,8 @@ function App() {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-      }
+      },
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
