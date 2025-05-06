@@ -1,18 +1,28 @@
 # config/initializers/cors.rb
 
+# Rails.application.config.middleware.insert_before 0, Rack::Cors do
+#   allow do
+#     # Add your frontend domains here
+#     origins 'http://localhost:5173', 
+#             'http://localhost:3000', 
+#             'http://127.0.0.1:5173',
+#             'http://127.0.0.1:3000',
+#             'https://your-frontend-production-domain.com'
+    
+#     resource '*',
+#       headers: :any,
+#       methods: [:get, :post, :put, :patch, :delete, :options, :head],
+#       credentials: true,
+#       expose: ['access-token', 'expiry', 'token-type', 'uid', 'client']
+#   end
+# end
+
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    # Add your frontend domains here
-    origins 'http://localhost:5173', 
-            'http://localhost:3000', 
-            'http://127.0.0.1:5173',
-            'http://127.0.0.1:3000',
-            'https://your-frontend-production-domain.com'
-    
+    origins 'http://localhost:5173' # your React app URL
     resource '*',
       headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head],
-      credentials: true,
-      expose: ['access-token', 'expiry', 'token-type', 'uid', 'client']
+      methods: [:get, :post, :patch, :put, :delete, :options],
+      credentials: true  # This is crucial
   end
 end

@@ -22,37 +22,19 @@ module TaskmanagerBackend
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
+
+    # Important: Set API mode first
     config.api_only = true
 
-    
-# Be sure to restart your server when you modify this file.
-
-# Avoid CORS issues when API is called from the frontend app.
-# Handle Cross-Origin Resource Sharing (CORS) in order to accept cross-origin Ajax requests.
-
-# Read more: https://github.com/cyu/rack-cors
-
-
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
-
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
-
-    # Only loads a smaller set of middleware suitable for API only apps.
-    # Middleware like session, flash, cookies can be added back manually.
-    # Skip views, helpers and assets when generating a new resource.
+    # Then add back necessary middleware for sessions and cookies
+    # This is the correct order for these middleware
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, 
-    key: '_taskmanager_session',
-    same_site: :none,  # Important for cross-origin
-    secure: true       # Required with same_site: :none
+    config.middleware.use ActionDispatch::Session::CookieStore, key: "TaskmanagerBackend"
+    
+    config.action_controller.forgery_protection_origin_check = false
+
+    config.autoload_lib(ignore: %w[assets tasks])
+    
+    # Other configuration settings...
   end
 end

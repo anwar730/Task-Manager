@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   post '/signup', to: "users#create"
   # In config/routes.rb
   get "/me", to: "users#me"
+  get '/session_test', to: 'sessions#test'
 
 end
