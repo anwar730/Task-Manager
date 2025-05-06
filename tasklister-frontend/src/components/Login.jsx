@@ -10,19 +10,32 @@ function Login({setCurrentUser}) {
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
-    const response = await fetch("https://task-manager-4iiq.onrender.com/login", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, password }),
-    });
-
-    if (response.ok) {
-        const userData = await response.json();
-        setCurrentUser(userData);
+  
+    try {
+      const response = await fetch("https://task-manager-4iiq.onrender.com/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        const { token, user } = data;
+  
+        // Store JWT securely
+        localStorage.setItem("token", token);
+  
+        // Set current user context/state
+        setCurrentUser(user);
         navigate("/tasks");
-    } else {
-      response.json().then((err) => setErrors(err.errors));
+      } else {
+        setErrors(data.errors || ["Invalid credentials"]);
+      }
+    } catch (err) {
+      setErrors(["Network error. Please try again later."]);
     }
   }
   

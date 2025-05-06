@@ -12,35 +12,49 @@ function TaskForm({ currentUser }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
-    // Check if currentUser exists
+  
     if (!currentUser) {
       alert("You must be logged in to create tasks");
       navigate("/");
       return;
     }
-    
+  
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("No token found. Please log in again.");
+      navigate("/");
+      return;
+    }
+  
     try {
       const response = await fetch(`https://task-manager-4iiq.onrender.com/users/${currentUser.id}/tasks`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ title, description, due_date: dueDate  }),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          due_date: dueDate,
+        }),
       });
-      
+  
       if (response.ok) {
         setTitle("");
         setDescription("");
-        
-        // Navigate to the tasks list after creating a task
+        setDueDate("");
         navigate("/tasks");
       } else {
-        response.json().then((err) => setErrors(err.errors));
+        const err = await response.json();
+        setErrors(err.errors || ["Failed to create task."]);
       }
     } catch (error) {
       console.error("Error creating task:", error);
       alert("Failed to create task. Please try again.");
     }
   }
+  
   
   return (
     <div className="container mx-auto p-4">

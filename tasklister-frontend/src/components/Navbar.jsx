@@ -5,15 +5,11 @@ function Navbar({ currentUser, setCurrentUser }) {
     const navigate = useNavigate();
     
     const handleLogout = () => {
-      fetch("https://task-manager-4iiq.onrender.com/logout", {
-        method: "DELETE",
-        credentials: "include"
-      })
-      .then(() => {
-        setCurrentUser(null);
-        navigate("/");
-      });
+      localStorage.removeItem("token");     // Remove the JWT
+      setCurrentUser(null);                 // Clear user state
+      navigate("/");                        // Redirect to login
     };
+    
     
     return (
       <nav className="flex justify-around items-center bg-blue-600 text-white p-4">

@@ -1,36 +1,48 @@
 import { Routes, Route } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import TaskList from "./components/TaskList";
 import Navbar from "./components/Navbar";
 import TaskForm from "./components/TaskForm";
-import DarkModeToggle from "./components/DarkModeToggle";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
-    fetch("https://task-manager-4iiq.onrender.com/me", { credentials: "include" })
-      .then((r) => {
-        if (r.ok) {
-          r.json().then(user => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    fetch("https://task-manager-4iiq.onrender.com/me", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json().then((user) => {
             setCurrentUser(user);
             setLoading(false);
           });
         } else {
+          localStorage.removeItem("token");
           setLoading(false);
         }
       })
-      .catch(err => {
-        console.error("Error checking authentication:", err);
+      .catch((err) => {
+        console.error("Auth check failed:", err);
+        localStorage.removeItem("token");
         setLoading(false);
       });
   }, []);
-  
+
   if (loading) return <div className="text-center p-8">Loading...</div>;
-  
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} />

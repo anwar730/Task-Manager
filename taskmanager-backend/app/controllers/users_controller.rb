@@ -10,14 +10,13 @@ class UsersController < ApplicationController
   end
 
   def me
-    if session[:user_id]
-      user = User.find_by(id: session[:user_id])
-      render json: user
+    if @current_user
+      render json: @current_user
     else
       render json: { error: 'Not authorized' }, status: :unauthorized
     end
-    
   end
+  
 
   def show
     render json: @user.to_json(include: :tasks)
@@ -26,8 +25,8 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      session[:user_id] = user.id
-      render json: user, status: :created
+      token = JWT.encode({ user_id: user.id }, Rails.application.secret_key_base)
+    render json: { user: user, token: token }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end

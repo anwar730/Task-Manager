@@ -12,26 +12,35 @@ function Signup({ setCurrentUser }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
-    const response = await fetch("https://task-manager-4iiq.onrender.com/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ name, email, password, password_confirmation: passwordconfirmation }),
-    });
-
-    if (response.ok) {
-      // After signup, fetch the current user
-      const meResponse = await fetch("https://task-manager-4iiq.onrender.com/me", {
-        credentials: "include",
+  
+    try {
+      const response = await fetch("https://task-manager-4iiq.onrender.com/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          password_confirmation: passwordconfirmation,
+        }),
       });
-
-      if (meResponse.ok) {
-        const userData = await meResponse.json();
-        setCurrentUser(userData); // <-- Set current user globally
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        const { token, user } = data;
+  
+        // Store the JWT token
+        localStorage.setItem("token", token);
+  
+        // Set current user
+        setCurrentUser(user);
         navigate("/tasks");
+      } else {
+        setErrors(data.errors || ["Signup failed"]);
       }
-    } else {
-      response.json().then((err) => setErrors(err.errors));
+    } catch (err) {
+      setErrors(["Network error. Please try again later."]);
     }
   }
 

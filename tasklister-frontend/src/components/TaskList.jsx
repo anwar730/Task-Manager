@@ -20,9 +20,12 @@ function TaskList({ currentUser }) {
     );
   }
   function handleDelete(taskId) {
+    const token = localStorage.getItem("token");
     fetch(`https://task-manager-4iiq.onrender.com/users/${currentUser.id}/tasks/${taskId}`, {
       method: "DELETE",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => {
         if (res.ok) {
@@ -30,17 +33,20 @@ function TaskList({ currentUser }) {
         }
       });
   }
+  
 
   useEffect(() => {
-    // Redirect if not logged in
     if (!currentUser) {
       navigate("/");
       return;
     }
-
-    // Fetch tasks for the current user
+  
+    const token = localStorage.getItem("token");
+  
     fetch(`https://task-manager-4iiq.onrender.com/users/${currentUser.id}/tasks`, {
-      credentials: "include"
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then(r => r.json())
       .then(data => {
@@ -52,6 +58,7 @@ function TaskList({ currentUser }) {
         setLoading(false);
       });
   }, [currentUser, navigate]);
+  
 
   // Filter tasks based on the search query
   const filteredTasks = tasks.filter((task) => {
