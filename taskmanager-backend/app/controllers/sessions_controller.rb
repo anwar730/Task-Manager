@@ -28,8 +28,11 @@ class SessionsController < ApplicationController
       puts "Session set: #{session[:user_id]}"  # Debugging session
       
       # Make sure cookies reach the frontend
-      cookies.options[:same_site] = :none
-      cookies.options[:secure] = true
+      cookies[Rails.application.config.session_options[:key]] = {
+        value: cookies[Rails.application.config.session_options[:key]],
+        same_site: :none,
+        secure: true
+      }
       
       render json: user
     else
