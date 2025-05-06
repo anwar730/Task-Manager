@@ -26,6 +26,7 @@ function App() {
       .then((res) => {
         if (res.ok) {
           return res.json().then((user) => {
+            console.log(user)
             setCurrentUser(user);
             setLoading(false);
           });
