@@ -17,12 +17,22 @@
 #   end
 # end
 
+# Rails.application.config.middleware.insert_before 0, Rack::Cors do
+#   allow do
+#     origins 'https://task-manager-zeta-eight.vercel.app/' # your React app URL
+#     resource '*',
+#       headers: :any,
+#       methods: [:get, :post, :patch, :put, :delete, :options],
+#       credentials: true  # This is crucial
+#   end
+# end
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://task-manager-zeta-eight.vercel.app/' # your React app URL
+    origins 'https://task-manager-zeta-eight.vercel.app', 'http://localhost:5173'
+    
     resource '*',
       headers: :any,
-      methods: [:get, :post, :patch, :put, :delete, :options],
-      credentials: true  # This is crucial
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
   end
 end
