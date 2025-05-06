@@ -18,6 +18,7 @@ function Login({setCurrentUser}) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, password }),
+        mode: "cors", // <-- explicitly request CORS
       });
   
       const data = await response.json();
