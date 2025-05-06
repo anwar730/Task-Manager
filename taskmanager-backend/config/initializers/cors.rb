@@ -19,7 +19,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:5173' # your React app URL
+    origins 'https://task-manager-zeta-eight.vercel.app/' # your React app URL
     resource '*',
       headers: :any,
       methods: [:get, :post, :patch, :put, :delete, :options],
