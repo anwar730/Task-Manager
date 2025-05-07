@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Make sure this import is present
 
+
 function TaskForm({ currentUser }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
-  const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState(new Date());
 
   const navigate = useNavigate(); // This line is critical - it initializes the navigate function
   
@@ -78,6 +79,7 @@ function TaskForm({ currentUser }) {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
+        <label className="mb-2">Due Date</label>
         <input
   type="date"
   className="input mb-4"
@@ -85,7 +87,8 @@ function TaskForm({ currentUser }) {
   onChange={(e) => setDueDate(e.target.value)}
   min={new Date().toISOString().split("T")[0]}
   required
-/>
+/> 
+
 
         <button 
           className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" 
