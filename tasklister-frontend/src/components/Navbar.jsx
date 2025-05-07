@@ -21,7 +21,7 @@ function Navbar({ currentUser, setCurrentUser }) {
             </>
           ) : (
             <>
-              <a className="mx-2 hover:underline" href="/">Login</a>
+              
               <a className="mx-2 hover:underline" href="/signup">Signup</a>
             </>
           )}
