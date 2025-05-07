@@ -20,7 +20,7 @@ function Login({setCurrentUser}) {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        
 
         body: JSON.stringify({ name, password }),
         mode: "cors", // <-- explicitly request CORS

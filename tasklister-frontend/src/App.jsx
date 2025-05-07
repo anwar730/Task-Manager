@@ -23,7 +23,6 @@ function App() {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
