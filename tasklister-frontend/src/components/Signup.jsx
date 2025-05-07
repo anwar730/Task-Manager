@@ -7,11 +7,13 @@ function Signup({ setCurrentUser }) {
   const [errors, setErrors] = useState([]);
   const [password, setPassword] = useState("");
   const [passwordconfirmation, setPasswordconfirmation] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
+    setIsSubmitting(true);
   
     try {
       const response = await fetch("https://task-manager-4iiq.onrender.com/signup", {
@@ -41,6 +43,8 @@ function Signup({ setCurrentUser }) {
       }
     } catch (err) {
       setErrors(["Network error. Please try again later."]);
+    }finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -83,7 +87,9 @@ function Signup({ setCurrentUser }) {
           onChange={(e) => setPasswordconfirmation(e.target.value)}
           required
         />
-        <button className="btn w-full" type="submit">Signup</button>
+        <button className="btn w-full" type="submit" disabled={isSubmitting}>
+    {isSubmitting ? "Signing up..." : "Signup"}
+  </button>
       </form>
     </div>
   );

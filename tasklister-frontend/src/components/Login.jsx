@@ -6,10 +6,13 @@ function Login({setCurrentUser}) {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
+    setIsSubmitting(true);
   
     try {
       const response = await fetch("https://task-manager-4iiq.onrender.com/login", {
@@ -40,6 +43,9 @@ function Login({setCurrentUser}) {
     } catch (err) {
       setErrors(["Network error. Please try again later."]);
     }
+    finally {
+      setIsSubmitting(false);
+    }
   }
   
 
@@ -66,9 +72,11 @@ function Login({setCurrentUser}) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="btn w-full" type="submit">Login</button>
+        <button className="btn w-full" type="submit" disabled={isSubmitting}>
+    {isSubmitting ? "Logging in..." : "Log In"}
+  </button>
         <p className="text-center mt-4">
-          No account? <a className="text-blue-500" href="/signup">Signup</a>
+        Don't have an account? <a className="text-blue-500" href="/signup">Signup</a>
         </p>
       </form>
       
