@@ -79,7 +79,7 @@ function TaskForm({ currentUser }) {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-        <label className="mb-2">Due Date</label>
+        <label className="block text-sm font-medium text-gray-700 mb-3">Due Date</label>
         <input
   type="date"
   className="input mb-4"
